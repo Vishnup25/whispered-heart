@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
-const captions = [
-  "Still my favorite human",
-  "How are you this cute and this annoying",
-  "Bestie moment, core memory",
-  "This smile fixes everything",
-  "My comfort person",
-  "Forever grateful for this day",
+const photos = [
+  { src: "/photos/pic1.jpg", type: "image", caption: "Still my favorite human" },
+  { src: "/photos/pic2.jpg", type: "image", caption: "How are you this cute and this annoying" },
+  { src: "/photos/pic3.mp4", type: "video", caption: "Bestie moment, core memory" },
+  { src: "/photos/pic4.jpg", type: "image", caption: "This smile fixes everything" },
+  { src: "/photos/pic5.jpeg", type: "image", caption: "My comfort person" },
+  { src: "/photos/pic6.mp4", type: "video", caption: "Forever grateful for this day" },
 ];
 
 const rotations = [-3, 2, -1.5, 3, -2, 1.5];
@@ -24,12 +24,12 @@ const Scene7Photos = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section className="scene relative" style={{ minHeight: "100vh" }}>
+    <section className="scene relative min-h-screen">
       <div className="absolute inset-0" style={{ background: "var(--gradient-romantic)" }} />
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto">
+      <div className="relative z-10 w-full max-w-6xl mx-auto py-12">
         <motion.p
-          className="text-sm tracking-[0.3em] uppercase mb-12 text-center"
+          className="text-sm tracking-[0.3em] uppercase mb-16 text-center"
           style={{ color: "hsl(var(--rose-gold))" }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -40,10 +40,10 @@ const Scene7Photos = () => {
 
         <div
           ref={scrollRef}
-          className="flex gap-8 overflow-x-auto pb-8 px-4 snap-x snap-mandatory scrollbar-hide"
+          className="flex gap-8 overflow-x-auto pb-16 pt-8 px-8 snap-x snap-mandatory scrollbar-hide items-center justify-start md:justify-center"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {captions.map((caption, i) => (
+          {photos.map((photo, i) => (
             <motion.div
               key={i}
               className="polaroid flex-shrink-0 snap-center"
@@ -52,40 +52,51 @@ const Scene7Photos = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: i * 0.1 }}
               viewport={{ once: true }}
-              whileHover={{ rotate: 0, scale: 1.03 }}
+              whileHover={{ rotate: 0, scale: 1.05, zIndex: 10 }}
             >
-              {/* Photo placeholder */}
+              {/* Photo Area */}
               <div
-                className="w-48 h-48 md:w-56 md:h-56 rounded-sm"
+                className="w-56 h-64 md:w-64 md:h-72 rounded-sm overflow-hidden relative shadow-inner"
                 style={{
                   background: `linear-gradient(135deg, ${bgColors[i]}, ${bgColors[(i + 1) % bgColors.length]})`,
                 }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="hsl(350, 70%, 75%)" strokeWidth="1" opacity="0.5">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                  </svg>
-                </div>
+                {photo.type === "image" ? (
+                  <img
+                    src={photo.src}
+                    alt={photo.caption}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <video
+                    src={photo.src}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                )}
               </div>
 
               {/* Caption */}
               <p
-                className="absolute bottom-3 left-0 right-0 text-center font-accent text-sm italic"
+                className="absolute bottom-5 left-0 right-0 text-center font-accent text-sm md:text-base italic px-4"
                 style={{ color: "hsl(340, 30%, 25%)" }}
               >
-                {caption}
+                {photo.caption}
               </p>
 
               {/* Tape effect */}
               <div
-                className="absolute -top-2 left-1/2 -translate-x-1/2 w-12 h-5 rounded-sm opacity-50"
-                style={{ background: "hsl(40, 30%, 85%)" }}
+                className="absolute -top-3 left-1/2 -translate-x-1/2 w-16 h-7 rounded-sm opacity-50 shadow-sm"
+                style={{ background: "hsl(40, 30%, 85%)", transform: "rotate(-2deg)" }}
               />
             </motion.div>
           ))}
         </div>
 
-        <p className="text-center text-sm mt-4" style={{ color: "hsl(var(--muted-foreground))" }}>
+        <p className="text-center text-sm mt-8 opacity-70" style={{ color: "hsl(var(--muted-foreground))" }}>
           ← scroll →
         </p>
       </div>
