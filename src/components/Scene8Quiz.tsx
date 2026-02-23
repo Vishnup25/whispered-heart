@@ -39,7 +39,7 @@ const Scene8Quiz = () => {
               </p>
 
               <h2 className="cinematic-text text-3xl md:text-4xl mb-12" style={{ color: "hsl(var(--ivory))" }}>
-                Are we just best friends?
+                Are we more than best friends now?
               </h2>
 
               <div className="flex gap-8 justify-center items-center relative">
